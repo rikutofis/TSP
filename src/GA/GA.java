@@ -28,7 +28,8 @@ public class GA {
     private int notImproved;
 
     public GA(TSP tsp) {
-        Graph graph = new Graph(true);
+        Graph graph = new Graph(true, false, true);
+        graph.setSolution(675);
 
         currPopulation = Population.initPopulation(TSP.city_size, POPULATION_SIZE);
         // currPopulation = Population.initPopulationNN(POPULATION_SIZE);
@@ -42,13 +43,14 @@ public class GA {
             for(Individual path : currPopulation.getPopulation()) { //visualising
                 tsp.setPath(path);
             }
-            graph.addData(currPopulation.averageDistance());
+            graph.addAverage(currPopulation.averageDistance());
 
             Individual elitist = currPopulation.getElitist(); //finding the elitist
             if(best_path.getFitness() < elitist.getFitness()) {
                 best_path = elitist.clone();
                 notImproved = 0;
             }
+            graph.addBest(best_path.getDistance());
 
             if(notImproved == MAX_NOT_IMPROVED) { //Check max not improved
                 break;

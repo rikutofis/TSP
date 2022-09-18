@@ -19,9 +19,9 @@ public class TSP {
     public static int city_size;
 
     public TSP() {
-        initCities(300);
+        // initCities(300);
 
-        // initCities(new File("src/res/berlin52.txt"));
+        initCities(new File("src/res/berlin52.txt"));
         // stretchLocation(0.7);
         // shiftLocation(0, 30);
 
