@@ -19,7 +19,7 @@ public class TSP {
     public static int city_size;
 
     public TSP() {
-        // initCities(150);
+        initCities(300);
 
         // initCities(new File("src/res/berlin52.txt"));
         // stretchLocation(0.7);
@@ -33,8 +33,8 @@ public class TSP {
         // stretchLocation(4);
         // shiftLocation(20, 0);
 
-        initCities(new File("src/res/a280.txt"));
-        stretchLocation(4);
+        // initCities(new File("src/res/a280.txt"));
+        // stretchLocation(4);
 
         initAdjacencyMatrix();
 

@@ -33,6 +33,7 @@ public class Individual extends Path {
 
     public Individual(Path path) {
         this.path = path.getPath().clone();
+        distance = path.getDistance();
         fitness = 1/path.getDistance();
     }
 
