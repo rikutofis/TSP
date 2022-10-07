@@ -24,19 +24,17 @@ public class Graph extends JPanel {
 
     private double solution;
 
-    private boolean visualize;
     private boolean visualize_average;
     private boolean visualize_best;
 
-    public Graph(boolean visualize, boolean visualize_average, boolean visualize_best) {
-        this.visualize = visualize;
+    public Graph(boolean visualize_average, boolean visualize_best) {
         this.visualize_average = visualize_average;
         this.visualize_best = visualize_best;
 
         average = new ArrayList<>();
         best = new ArrayList<>();
 
-        if(visualize) {
+        if(visualize_average || visualize_best) {
             this.setPreferredSize(new Dimension(500, 500));
 
             frame = new JFrame();
@@ -93,14 +91,15 @@ public class Graph extends JPanel {
     }
 
     public void addAverage(double value) {
-        if(visualize) {
+        if(visualize_average) {
             average.add(value);
             repaint();
         }
     }
 
     public void addBest(double value) {
-        if(visualize) {
+        if(visualize_best) {
+            // System.out.println(value);
             best.add(value);
             repaint();
         }

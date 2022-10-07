@@ -61,12 +61,7 @@ public class Path {
             int index1 = path[i];
             int index2 = path[i+1];
 
-            if(index1 < index2) {
-                distance += adjacency_matrix[index1][index2];
-            }
-            else {
-                distance += adjacency_matrix[index2][index1];
-            }   
+            distance += adjacency_matrix[Math.min(index1, index2)][Math.max(index1, index2)];
         }
     }
 

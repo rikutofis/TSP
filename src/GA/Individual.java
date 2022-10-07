@@ -1,8 +1,5 @@
 package GA;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 import main.Path;
 
 public class Individual extends Path {
@@ -99,6 +96,12 @@ public class Individual extends Path {
 
         path[path.length - 1] = path[0];
 
+        calcDistance();
+    }
+
+    @Override
+    public void setPath(int[] path) {
+        this.path = path;
         calcDistance();
     }
 

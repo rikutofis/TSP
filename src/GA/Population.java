@@ -15,24 +15,30 @@ public class Population {
     }
 
 
-    public static Population initPopulation(int city_size, int population_size) {
+    public static Population initPopulation(int population_size) {
         Population population = new Population(population_size);
-        Individual individual = new Individual(city_size);
 
         for(int i = 0; i < population_size; i++) {
-            Individual ind = individual.clone();
-            ind.shuffle();
-            population.setIndividual(i, ind);
+            Individual individual = new Individual(TSP.city_size);
+            individual.shuffle();
+            population.setIndividual(i, individual);
         }
 
         return population;
     }
 
-    public static Population initPopulationNN(int population_size) {
+    public static Population initPopulationNN(int population_size, double ratio) {
         Population population = new Population(population_size);
 
         for(int i = 0; i < population_size; i++) {
-            population.setIndividual(i, new Individual(NN.nearestNeighbor()));
+            if(Math.random() < ratio) {
+                population.setIndividual(i, new Individual(NN.nearestNeighbor()));
+            }
+            else {
+                Individual individual = new Individual(TSP.city_size);
+                individual.shuffle();
+                population.setIndividual(i, individual);
+            }
         }
 
         return population;
@@ -54,12 +60,33 @@ public class Population {
         Individual individual = population[0];
 
         for(int i = 1; i < population.length; i++) {
-            if(individual.getFitness() < population[i].getFitness()) {
+            if(individual.getDistance() > population[i].getDistance()) {
                 individual = population[i];
             }
         }
 
-        return individual.clone();
+        return individual;
+    }
+
+    public Population removeIndividual(Individual individual) {
+        Population newPopulation = new Population(population.length - 1);
+
+        boolean encountered = false;
+        for(int i = 0; i < population.length - 1; i++) {
+            if(this.getIndividual(i) == individual) {
+                encountered = true;
+                i++;
+            }
+
+            if(!encountered) {
+                newPopulation.setIndividual(i, this.getIndividual(i));
+            }
+            else {
+                newPopulation.setIndividual(i-1, this.getIndividual(i));
+            }
+        }
+
+        return newPopulation;
     }
 
     public Individual selection() {
@@ -75,7 +102,7 @@ public class Population {
 
     //Ordered Crossover
     public static Individual crossover(Individual parent1, Individual parent2) {
-        if(GA.CROSSOVER_RATE < Math.random()) {
+        if(GA.CROSSOVER_RATE > Math.random()) {
             return parent1;
         }
 
@@ -106,6 +133,7 @@ public class Population {
         }
 
         child.setGene(child.length() - 1, child.getGene(0));
+        child.calcDistance();
 
         return child;
     }
@@ -144,6 +172,30 @@ public class Population {
             sum += individual.getDistance();
         }
 
-        return sum/GA.POPULATION_SIZE;
+        return sum/population.length;
     }
+
+
+    public Population clone() {
+        Population newPopulation = new Population(population.length);
+        
+        for(int i = 0; i < population.length; i++) {
+            newPopulation.setIndividual(i, population[i].clone());
+        }
+
+        return newPopulation;
+    }
+
+    @Override
+    public String toString() {
+        String output = "Population: \n";
+
+        for(Individual i : population) {
+            output += i.toString() + "\n";
+        }
+
+        return output;
+    }
+
+    
 }

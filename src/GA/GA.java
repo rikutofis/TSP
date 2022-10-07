@@ -1,21 +1,23 @@
 package GA;
 
+import java.net.Socket;
+
 import GA.Mutation.MUTATION;
 import GA.Selection.SELECTION;
 import main.Graph;
 import main.TSP;
 
 public class GA {
-    public final static int POPULATION_SIZE = 500;
+    public final static int POPULATION_SIZE = 1000;
     public final static double MUTATION_RATE = 0.05;
     public final static double CROSSOVER_RATE = 0.7;
 
     public final static int MAX_GENERATION = 10000;
     public final static int MAX_NOT_IMPROVED = 1000;
 
-    public final static int TOURNAMENT_SIZE = 5;
+    public final static int TOURNAMENT_SIZE = 10;
 
-    public final static int ELITISM = 1; //0 for false, 1 for true
+    public final static int ELITISM = 10; //number of the elites to keep for the next generation
 
     public final static SELECTION SELECTION_METHOD = SELECTION.TOURNAMENT; 
     public final static MUTATION MUTATE_METHOD = MUTATION.INVERSION;
@@ -28,11 +30,11 @@ public class GA {
     private int notImproved;
 
     public GA(TSP tsp) {
-        Graph graph = new Graph(true, false, true);
-        graph.setSolution(675);
+        Graph graph = new Graph(true, true);
+        // graph.setSolution(1211);
 
-        currPopulation = Population.initPopulation(TSP.city_size, POPULATION_SIZE);
-        // currPopulation = Population.initPopulationNN(POPULATION_SIZE);
+        currPopulation = Population.initPopulation(POPULATION_SIZE);
+        // currPopulation = Population.initPopulationNN(POPULATION_SIZE, 0.005);
         newPopulation = new Population(POPULATION_SIZE);
 
         best_path = new Individual();
@@ -43,13 +45,15 @@ public class GA {
             for(Individual path : currPopulation.getPopulation()) { //visualising
                 tsp.setPath(path);
             }
+
             graph.addAverage(currPopulation.averageDistance());
 
             Individual elitist = currPopulation.getElitist(); //finding the elitist
-            if(best_path.getFitness() < elitist.getFitness()) {
+            if(best_path.getDistance() > elitist.getDistance()) {
                 best_path = elitist.clone();
                 notImproved = 0;
             }
+
             graph.addBest(best_path.getDistance());
 
             if(notImproved == MAX_NOT_IMPROVED) { //Check max not improved
@@ -57,9 +61,15 @@ public class GA {
             }
             notImproved++;
 
-            if(ELITISM == 1) { //Elitism
-                newPopulation.setIndividual(0, elitist);
+
+            for(int j = 0; j < ELITISM; j++) { //Elitism
+                newPopulation.setIndividual(j, elitist);
+                
+                Population temp = currPopulation.clone();
+                temp.removeIndividual(elitist);
+                elitist = temp.getElitist();
             }
+
 
             for(int j = ELITISM; j < POPULATION_SIZE; j++) { //Selection & Crossover
                 Individual parent1 = currPopulation.selection();
