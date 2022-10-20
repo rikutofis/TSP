@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import GA.GA;
+import NN.NN;
 
 public class TSP {
     private GUI gui;
@@ -19,7 +20,7 @@ public class TSP {
     public static int city_size;
 
     public TSP() {
-        initCities(100);
+        // initCities(100);
 
         // initCities(new File("src/res/berlin52.txt"));
         // stretchLocation(0.7);
@@ -33,19 +34,38 @@ public class TSP {
         // stretchLocation(4);
         // shiftLocation(20, 0);
 
+        // initCities(new File("src/res/ts225.txt"));
+        // stretchLocation(0.05);
+        // shiftLocation(-100, -100);
+        
+        // initCities(new File("src/res/kroB200.txt"));
+        // stretchLocation(0.35);
+        // shiftLocation(20, 20);
+
         // initCities(new File("src/res/a280.txt"));
         // stretchLocation(4);
 
+        initCities(new File("src/res/pr299.txt"));
+        // stretchLocation(0.22);
+        // shiftLocation(-460, -200);
+        
+        // initCities(new File("src/res/rat575.txt"));
+        // stretchLocation(1.8);
+        // shiftLocation(20, 10);
+
         initAdjacencyMatrix();
 
-        gui = new GUI(cities, true);
+        gui = new GUI(cities, false);
 
         global_best_path = new Path();
 
 
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < 100; i++) {
             new GA(this);
+            // new NN(this);
         }
+        System.out.println();
+        System.out.println(global_best_path);
     }
 
 

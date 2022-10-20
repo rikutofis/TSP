@@ -106,7 +106,7 @@ public class Individual extends Path {
     }
 
     @Override
-    protected void calcDistance() {
+    public void calcDistance() {
         distance = 0;
 
         for(int i = 0; i < path.length - 1; i++) {

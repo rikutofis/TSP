@@ -1,23 +1,21 @@
 package GA;
 
-import java.net.Socket;
-
 import GA.Mutation.MUTATION;
 import GA.Selection.SELECTION;
 import main.Graph;
 import main.TSP;
 
 public class GA {
-    public final static int POPULATION_SIZE = 1000;
+    public final static int POPULATION_SIZE = 500;
     public final static double MUTATION_RATE = 0.05;
     public final static double CROSSOVER_RATE = 0.7;
 
     public final static int MAX_GENERATION = 10000;
-    public final static int MAX_NOT_IMPROVED = 1000;
+    public final static int MAX_NOT_IMPROVED = 10000;
 
-    public final static int TOURNAMENT_SIZE = 10;
+    public final static int TOURNAMENT_SIZE = 5;
 
-    public final static int ELITISM = 10; //number of the elites to keep for the next generation
+    public final static int ELITISM = 1; //number of the elites to keep for the next generation
 
     public final static SELECTION SELECTION_METHOD = SELECTION.TOURNAMENT; 
     public final static MUTATION MUTATE_METHOD = MUTATION.INVERSION;
@@ -30,7 +28,7 @@ public class GA {
     private int notImproved;
 
     public GA(TSP tsp) {
-        Graph graph = new Graph(true, true);
+        Graph graph = new Graph(false, false);
         // graph.setSolution(1211);
 
         currPopulation = Population.initPopulation(POPULATION_SIZE);

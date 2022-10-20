@@ -8,7 +8,10 @@ import main.TSP;
 
 public class NN {
     public NN(TSP tsp) {
-        tsp.setPath(nearestNeighbor());
+        Path path = nearestNeighbor();
+        tsp.setPath(path);
+
+        System.out.println(path.getDistance());
     }
 
     public static Path nearestNeighbor() {
@@ -39,6 +42,7 @@ public class NN {
         }
 
         path.set(path.length() - 1, path.get(0));
+        path.calcDistance();
 
         return path;
     }
