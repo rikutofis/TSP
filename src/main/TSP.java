@@ -20,38 +20,17 @@ public class TSP {
     public static int city_size;
 
     public TSP() {
-        // initCities(100);
-
-        // initCities(new File("src/res/berlin52.txt"));
-        // stretchLocation(0.7);
-        // shiftLocation(0, 30);
-
-        // initCities(new File("src/res/st70.txt"));
-        // stretchLocation(9);
-        // shiftLocation(0, 20);
-
         // initCities(new File("src/res/rat99.txt"));
         // stretchLocation(4);
-        // shiftLocation(20, 0);
-
-        // initCities(new File("src/res/ts225.txt"));
-        // stretchLocation(0.05);
-        // shiftLocation(-100, -100);
+        // shiftLocation(50, 0);
         
         // initCities(new File("src/res/kroB200.txt"));
         // stretchLocation(0.35);
-        // shiftLocation(20, 20);
-
-        // initCities(new File("src/res/a280.txt"));
-        // stretchLocation(4);
+        // shiftLocation(40, 50);
 
         initCities(new File("src/res/pr299.txt"));
         // stretchLocation(0.22);
         // shiftLocation(-460, -200);
-        
-        // initCities(new File("src/res/rat575.txt"));
-        // stretchLocation(1.8);
-        // shiftLocation(20, 10);
 
         initAdjacencyMatrix();
 
@@ -59,13 +38,19 @@ public class TSP {
 
         global_best_path = new Path();
 
-
         for(int i = 0; i < 100; i++) {
+            // gui.reset();
             new GA(this);
             // new NN(this);
         }
+
         System.out.println();
         System.out.println(global_best_path);
+
+
+
+        // Path path = new Path(new int[]{141, 140, 138, 96, 95, 94, 97, 82, 83, 98, 99, 100, 101, 81, 78, 80, 19, 17, 18, 16, 14, 15, 84, 85, 93, 86, 90, 88, 89, 87, 13, 12, 11, 10, 9, 8, 7, 6, 91, 92, 143, 145, 144, 147, 146, 148, 149, 150, 151, 152, 153, 154, 155, 213, 214, 292, 291, 289, 290, 288, 287, 286, 216, 215, 217, 211, 212, 221, 208, 209, 207, 206, 203, 204, 205, 298, 226, 225, 224, 279, 282, 281, 280, 277, 278, 275, 276, 274, 231, 232, 229, 230, 228, 202, 227, 199, 198, 201, 163, 162, 136, 134, 135, 137, 161, 133, 132, 131, 128, 103, 129, 130, 164, 165, 200, 167, 166, 196, 197, 233, 234, 273, 272, 271, 237, 235, 236, 240, 239, 238, 268, 269, 270, 242, 241, 195, 192, 193, 194, 169, 168, 173, 171, 170, 172, 178, 188, 186, 177, 175, 174, 176, 126, 122, 112, 110, 111, 57, 59, 56, 38, 42, 40, 39, 41, 36, 37, 35, 34, 31, 30, 29, 33, 32, 65, 62, 63, 104, 64, 61, 106, 105, 107, 108, 109, 60, 58, 43, 46, 47, 48, 49, 50, 51, 52, 53, 55, 54, 115, 113, 114, 116, 118, 119, 121, 120, 124, 123, 125, 127, 190, 191, 189, 187, 249, 250, 248, 243, 244, 245, 246, 247, 267, 266, 264, 265, 262, 260, 254, 251, 252, 185, 184, 255, 183, 182, 181, 180, 179, 117, 253, 259, 261, 263, 258, 257, 256, 45, 44, 67, 66, 68, 69, 70, 73, 72, 71, 76, 74, 79, 75, 77, 102, 21, 22, 20, 23, 24, 25, 26, 27, 28, 139, 160, 159, 210, 219, 223, 222, 218, 284, 285, 283, 220, 158, 157, 156, 142, 4, 5, 1, 2, 3, 0, 297, 295, 296, 293, 294, 141});
+        // this.setPath(path);
     }
 
 
@@ -74,8 +59,8 @@ public class TSP {
         city_size = size;
 
         for(int i = 0; i < size; i++){
-            int x = (int) Math.round(Math.random() * GUI.SCREEN_WIDTH);
-            int y = (int) Math.round(Math.random() * GUI.SCREEN_LENGTH);
+            double x = Math.round(Math.random() * GUI.SCREEN_WIDTH);
+            double y = Math.round(Math.random() * GUI.SCREEN_LENGTH);
 
             cities[i] = new City(x, y, i);
         }
@@ -95,8 +80,8 @@ public class TSP {
 
         while(reader.hasNextLine()) {
             reader.nextInt();
-            int x = reader.nextInt();
-            int y = reader.nextInt();
+            double x = reader.nextDouble();
+            double y = reader.nextDouble();
 
             cities.add(new City(x, y, index));
             index++;

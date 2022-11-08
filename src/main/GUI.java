@@ -54,7 +54,7 @@ public class GUI extends JPanel {
             int index1 = best_path.get(i);
             int index2 = best_path.get(i+1);
 
-            g2.drawLine(cities[index1].getX(), cities[index1].getY(), cities[index2].getX(), cities[index2].getY());
+            g2.drawLine((int) cities[index1].getX(), (int) cities[index1].getY(), (int) cities[index2].getX(), (int) cities[index2].getY());
         }
 
         //draw path
@@ -65,13 +65,13 @@ public class GUI extends JPanel {
             int index1 = path.get(i);
             int index2 = path.get(i+1);
 
-            g2.drawLine(cities[index1].getX(), cities[index1].getY(), cities[index2].getX(), cities[index2].getY());
+            g2.drawLine((int) cities[index1].getX(), (int) cities[index1].getY(), (int) cities[index2].getX(), (int) cities[index2].getY());
         }
 
         //draw circles for cities
         g2.setColor(Color.WHITE);
         for(City c : cities) {
-            g2.fillOval(c.getX() - CIRCLE_SIZE/2, c.getY() - CIRCLE_SIZE/2, CIRCLE_SIZE, CIRCLE_SIZE);
+            g2.fillOval((int) (c.getX() - CIRCLE_SIZE/2), (int) (c.getY() - CIRCLE_SIZE/2), CIRCLE_SIZE, CIRCLE_SIZE);
         }
     }
 
@@ -87,5 +87,9 @@ public class GUI extends JPanel {
         }
 
         repaint();
+    }
+
+    public void reset() {
+        best_path = new Path();
     }
 }

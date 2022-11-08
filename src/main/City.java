@@ -1,25 +1,25 @@
 package main;
 
 public class City {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
     private int index;
 
     private static double[][] adjacency_matrix;
 
-    public City(int x, int y, int index) {
+    public City(Double x, Double y, int index) {
         this.x = x;
         this.y = y;
         this.index = index;
     }
 
     
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -27,11 +27,11 @@ public class City {
         return index;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
     
