@@ -3,6 +3,7 @@ package GA;
 import GA.Mutation.MUTATION;
 import GA.Selection.SELECTION;
 import main.Graph;
+import main.PercentGraphWriter;
 import main.TSP;
 
 public class GA {
@@ -27,12 +28,15 @@ public class GA {
 
     private int notImproved;
 
+    Graph graph;
+
     public GA(TSP tsp) {
-        Graph graph = new Graph(false, false);
-        // graph.setSolution(1211);
+        graph = new Graph(true, true);
+        // graph.setSolution(7542);
+        PercentGraphWriter writer = new PercentGraphWriter(29437, "./src//percentGraph//rat99.txt", false);
 
         currPopulation = Population.initPopulation(POPULATION_SIZE);
-        // currPopulation = Population.initPopulationNN(POPULATION_SIZE, 0.005);
+        // currPopulation = Population.initPopulationNN(POPULATION_SIZE, 0.01);
         newPopulation = new Population(POPULATION_SIZE);
 
         best_path = new Individual();
@@ -45,6 +49,7 @@ public class GA {
             }
 
             graph.addAverage(currPopulation.averageDistance());
+            writer.write(currPopulation.averageDistance());
 
             Individual elitist = currPopulation.getElitist(); //finding the elitist
             if(best_path.getDistance() > elitist.getDistance()) {
@@ -85,5 +90,7 @@ public class GA {
         }
 
         System.out.println(best_path.getDistance());
+
+        writer.close();
     }
 }
